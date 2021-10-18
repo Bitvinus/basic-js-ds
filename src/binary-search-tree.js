@@ -14,75 +14,75 @@ module.exports = class BinarySearchTree {
     return this.rootnode;
   }
 
-  add(value) {
-    this.rootnode = addWithin(this.rootnode, value);
+  add(data) {
+    this.rootnode = addWithin(this.rootnode, data);
 
-    function addWithin(node, value) {
+    function addWithin(node, data) {
       if (!node) {
-        return new Node(value);
+        return new Node(data);
       }
 
-      if (node.value === value) {
+      if (node.data === data) {
         return node;
       }
 
-      if (value < node.value) {
-        node.left = addWithin(node.left, value);
+      if (data < node.data) {
+        node.left = addWithin(node.left, data);
       } else {
-        node.right = addWithin(node.right, value);
+        node.right = addWithin(node.right, data);
       }
       return node;
     }
   }
 
-  has(value) {
-    return searchNode(this.rootnode, value);
+  has(data) {
+    return searchNode(this.rootnode, data);
 
-    function searchNode(node, value) {
+    function searchNode(node, data) {
       if (!node) {
         return false;
       }
 
-      if (node.value === value) {
+      if (node.data === data) {
         return true;
       }
 
-      return value < node.value
-        ? searchNode(node.left, value)
-        : searchNode(node.right, value);
+      return data < node.data
+        ? searchNode(node.left, data)
+        : searchNode(node.right, data);
     }
   }
 
-  find(value) {
-    return searchNode(this.rootnode, value);
+  find(data) {
+    return findValue(this.rootnode, data);
 
-    function searchNode(node, value) {
+    function findValue(node, data) {
       if (!node) {
         return null;
       }
 
-      if (node.value === value) {
+      if (node.data === data) {
         return node;
       }
 
-      return value < node.value
-        ? searchNode(node.left, value)
-        : searchNode(node.right, value);
+      return data < node.data
+        ? findValue(node.left, data)
+        : findValue(node.right, data);
     }
   }
 
-  remove(value) {
-    this.rootnode = removeNode(this.rootnode, value);
+  remove(data) {
+    this.rootnode = removeNode(this.rootnode, data);
 
-    function removeNode(node, value) {
+    function removeNode(node, data) {
       if (!node) {
         return null;
       }
-      if (value < node.value) {
-        node.left = removeNode(node.left, value);
+      if (data < node.data) {
+        node.left = removeNode(node.left, data);
         return node;
-      } else if (node.value < value) {
-        node.right = removeNode(node.right, value);
+      } else if (node.data < data) {
+        node.right = removeNode(node.right, data);
         return node;
       } else {
         if (!node.left && !node.right) {
@@ -101,8 +101,8 @@ module.exports = class BinarySearchTree {
         while (minFromRight.left) {
           minFromRight = minFromRight.left;
         }
-        node.value = minFromRight.value;
-        node.right = removeNode(node.right, minFromRight.value);
+        node.data = minFromRight.data;
+        node.right = removeNode(node.right, minFromRight.data);
         return node;
       }
     }
@@ -112,21 +112,21 @@ module.exports = class BinarySearchTree {
     if (!this.rootnode) {
       return;
     }
-    let node = this.rootnode;
-    while (node.left) {
-      node = node.left;
+    let current = this.rootnode;
+    while (current.left) {
+      current = current.left;
     }
-    return node.value;
+    return current.data;
   }
 
   max() {
     if (!this.rootnode) {
       return;
     }
-    let node = this.rootnode;
-    while (node.right) {
-      node = node.right;
+    let current = this.rootnode;
+    while (current.right) {
+      current = current.right;
     }
-    return node.value;
+    return current.data;
   }
 };
